@@ -33,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = Input)
 		class UInputAction* IA_Move;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+		class UInputAction* IA_Jump;
+
 protected:
 
 	/** Handler for when a touch input begins. */

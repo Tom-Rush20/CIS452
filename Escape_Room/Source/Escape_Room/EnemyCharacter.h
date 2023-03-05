@@ -24,9 +24,23 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	//Change the rotation of the character to face the given actor
-	void LookAtActor(AActor* TargetActor);
+	bool LookAtActor(AActor* TargetActor);
 
 	//Can enemy see the given actor
 	bool CanSeeActor(const AActor* const TargetActor) const;
+
+protected:
+	bool bCanSeePlayer = false;
+	bool bPreviousCanSeePlayer = false;
+
+protected:
+	FTimerHandle ThrowTimerHandle;
+	float ThrowingInterval = 2.f;
+	float ThrowingDelay = 0.5f;
+	void ThrowDodgeball();
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Dodgeball)
+		TSubclassOf<class ADodgeballProjectile> DodgeballClass;
 
 };
