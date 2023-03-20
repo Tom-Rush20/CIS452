@@ -91,7 +91,7 @@ void ATopDownCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 		EnhancedPlayerInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ATopDownCharacter::Move);
 		EnhancedPlayerInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &ATopDownCharacter::Jump);
-		EnhancedPlayerInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &ATopDownCharacter::StopJumping);
+		EnhancedPlayerInputComponent->BindAction(IA_Jump, ETriggerEvent::Completed, this, &ATopDownCharacter::StopJumping);
 	}
 
 	
