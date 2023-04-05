@@ -88,3 +88,5 @@ DerivedDataCache/*
 **/Intermediate/*
 **/Plugins/*/Intermediate/*
 **/DerivedDataCache/*
+**/Content/StarterContent/*
+**/Content/MedievalDungeon/*
