@@ -19,8 +19,17 @@ void UTriggerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	// initialize our BoxComponent Reference
+	BoxComponent = GetOwner()->FindComponentByClass<UBoxComponent>();
+
+	if (WallToMove == nullptr) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Wall to Move not set on Trigger Component"));
+		return;
+	}
+
+	WallMover = WallToMove->FindComponentByClass<UWallMover>();
+	UE_LOG(LogTemp, Display, TEXT("Wall Mover set on TriggerComponent"));
 }
 
 
@@ -29,6 +38,39 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	// 
+
+	if (BoxComponent == nullptr) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BoxComponent not set on Trigger Component!"));
+		return;
+	}
+
+	if (WallMover == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WallMover not set on Trigger Component!"));
+		return;
+	}
+
+	TArray<AActor*> Actors;
+	BoxComponent->GetOverlappingActors(Actors);
+	for (AActor* Actor : Actors) 
+	{
+		//FString ActorName = Actor->GetActorNameOrLabel();
+		//UE_LOG(LogTemp, Display, TEXT("Tick: Overlapped actor's name: %s"), *ActorName);
+
+		//debugging messages
+		//bool HasTag = Actor->ActorHasTag("OpenDoor1");
+		//UE_LOG(LogTemp, Display, TEXT("Does Actor Have Tag \"OpenDoor1\"?:%d)", HasTag));
+		//int NumTags = Actor->Tags.Num();
+		//UE_LOG(LogTemp, Display, TEXT("Actor->Tags.Num(): %d"), NumTags);
+		if (Actor->ActorHasTag("OpenDoor1")) 
+		{
+			UE_LOG(LogTemp, Display, TEXT("Unlocking"));
+			WallMover->SetMoveTriggered(true);
+		}
+
+
+	}
 }
 

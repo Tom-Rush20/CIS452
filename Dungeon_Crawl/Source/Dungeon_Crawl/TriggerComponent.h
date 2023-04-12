@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Components/BoxComponent.h"
+#include "WallMover.h"
 #include "TriggerComponent.generated.h"
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -24,5 +27,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UPROPERTY(EditAnywhere)
+	UBoxComponent* BoxComponent;
+
+	//need to set in editor
+	UPROPERTY(EditAnywhere)
+	AActor* WallToMove;
+
+	class UWallMover* WallMover;
 };
