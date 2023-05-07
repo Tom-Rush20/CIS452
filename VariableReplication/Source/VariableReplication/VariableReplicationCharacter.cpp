@@ -69,6 +69,25 @@ void AVariableReplicationCharacter::BeginPlay()
 
 void AVariableReplicationCharacter::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
+	if (HasAuthority()) 
+	{
+		A++;
+		B++;
+	}
+	
+	const FString Values = FString::Printf(TEXT("Tom Rush\nA = %.2f B = %d"), A, B);
+	DrawDebugString(GetWorld(), GetActorLocation(), Values, nullptr, FColor::White, 0.0f, true);
+}
+
+void AVariableReplicationCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const 
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AVariableReplicationCharacter, A);
+
+	DOREPLIFETIME_CONDITION(AVariableReplicationCharacter, B, COND_OwnerOnly);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -76,6 +95,8 @@ void AVariableReplicationCharacter::Tick(float DeltaTime)
 
 void AVariableReplicationCharacter::OnRepNotify_B()
 {
+	const FString String = FString::Printf(TEXT("B was changed by the server and is now %d!"), B);
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Red, String);
 }
 
 void AVariableReplicationCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
